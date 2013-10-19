@@ -1,0 +1,13 @@
+#main {
+  width: 100px;
+}
+#main contents {
+  margin: 5px;
+  padding: 2px;
+}
+#main header {
+  margin: 10px;
+}
+#main footer {
+  padding: 2px;
+}
