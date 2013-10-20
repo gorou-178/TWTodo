@@ -1,0 +1,29 @@
+{
+  "name": "TWTodo",
+  "version": "0.0.0",
+  "description": "Todo Management for Twitter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gurimmer/TWTodo.git"
+  },
+  "keywords": [
+    "todo",
+    "twitter"
+  ],
+  "author": "Satoshi Anai",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "f957c48fbc4fe7fc72ac90f287a24c4406087bea",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-sass": "~0.5.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-cssmin": "~0.6.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-contrib-jshint": "~0.6.4"
+  }
+}
