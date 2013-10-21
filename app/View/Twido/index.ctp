@@ -1,9 +1,10 @@
-<h2>ホーム<?php if ($login == true){echo "(ログイン中)";} else {echo "";}; ?></h2>
+<h2>ホーム<?php if (!empty($me)){echo "[" . h($me->tw_screen_name) . "]";} else {echo "";}; ?></h2>
 <?php
-    if ($login == true) {
+    if (!empty($me)) {
 ?>
     <p><?php echo $this->Html->link("[ログアウト]", array("action"=>"logout")); ?></p>
 <?php
+        var_dump($tweets);
     }
     else {
 ?>

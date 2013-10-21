@@ -64,10 +64,10 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => 'gurimmer',
-		'database' => 'todo_php',
+		'host' => 'gurimmer-green-db-1.cnvopn9oakrk.ap-northeast-1.rds.amazonaws.com',
+		'login' => 'webadmin',
+		'password' => 'webadmin',
+		'database' => 'green_db_1',
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);

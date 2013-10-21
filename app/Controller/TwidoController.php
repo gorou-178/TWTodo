@@ -15,6 +15,8 @@ define("CONSUMER_KEY", "nOcbpjvl3jUnB7ipKw8Rg");
 define("CONSUMER_SECRET", "ygjLuY2QPKUcKJsHgdApaliO1Ssn6U3SH55lDtYNs");
 define("SITE_URL", "http://gurimmer.lolipop.jp/app/twido/");
 
+App::uses("User", "Model");
+
 class TwidoController extends AppController {
 
     public $helpers = array('Html', 'Form', 'Session');
@@ -30,11 +32,17 @@ class TwidoController extends AppController {
     public function index() {
         $this->log("twido index");
         if($this->Session->read("Users.me")) {
-            $this->log("twido logging");
-            $this->set("login", true);
+
+            $twUser = $this->Session->read("Users.me");
+            $this->cb->setToken($twUser->tw_access_token, $twUser->tw_access_token_secret);
+
+            $tweets = $this->cb->statuses_homeTimeline();
+
+            $this->log("twido logging", "debug");
+            $this->set("me", $me);
+            $this->set("tweets", $tweets);
         } else {
-            $this->log("twido no loggin");
-            $this->set("login", false);
+            $this->log("twido no loggin", "debug");
         }
     }
 

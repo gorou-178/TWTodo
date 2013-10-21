@@ -8,6 +8,8 @@ define("CONSUMER_KEY", "nOcbpjvl3jUnB7ipKw8Rg");
 define("CONSUMER_SECRET", "ygjLuY2QPKUcKJsHgdApaliO1Ssn6U3SH55lDtYNs");
 define("SITE_URL", "http://gurimmer.lolipop.jp/app/twido/");
 
+App::uses("User", "Model");
+
 /**
  * Created by JetBrains PhpStorm.
  * User: anaisatoshi
@@ -69,11 +71,25 @@ class LoginController extends AppController {
             $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 
             $me = $this->cb->account_verifyCredentials();
-            var_dump($me);
-            var_dump($_SESSION);
+//            var_dump($me);
+//            var_dump($_SESSION);
 
-            // send to same URL, without oauth GET parameters
-//            header('Location: ' . basename(__FILE__));
+            $twUser = $this->User->findByTwUserId($me->id_str);
+            if (!$twUser) {
+                $this->User->create();
+                $this->User->tw_user_id = $me->id_str;
+                $this->User->tw_screen_name = $me->screen_name;
+                $this->User->tw_access_token = $reply->oauth_token;
+                $this->User->tw_access_token_secret = $reply->oauth_token_secret;
+                if ($this->User->save()) {
+                    // セッションハイジャック対策
+                    session_regenerate_id(true);
+                    $twUser = $this->User->findById($this->User->id);
+                    $this->Session->write("Users.me", $twUser);
+                    return $this->redirect(array("controller"=>"twido", "action"=>"index"));
+                }
+            }
+
             die();
         }
 
