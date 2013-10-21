@@ -29,14 +29,11 @@ class LoginController extends AppController {
     }
 
     public function index() {
-        $this->log("login");
+        $this->log("login", "debug");
     }
 
     public function callback() {
-        $this->log("callback");
-
-        session_start();
-
+        $this->log("callback", "debug");
         if (! isset($_SESSION['oauth_token'])) {
             // get the request token
             $reply = $this->cb->oauth_requestToken(array(
@@ -57,6 +54,8 @@ class LoginController extends AppController {
         } elseif (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
             // verify the token
             $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+            unset($_SESSION['oauth_token']);
+            unset($_SESSION['oauth_token_secret']);
             unset($_SESSION['oauth_verify']);
 
             // get the access token
@@ -65,10 +64,10 @@ class LoginController extends AppController {
             ));
 
             // store the token (which is different from the request token!)
-            $_SESSION['oauth_token'] = $reply->oauth_token;
-            $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
+//            $_SESSION['oauth_token'] = $reply->oauth_token;
+//            $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
 
-            $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+            $this->cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
 
             $me = $this->cb->account_verifyCredentials();
 //            var_dump($me);
