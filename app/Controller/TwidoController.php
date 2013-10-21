@@ -20,7 +20,7 @@ App::uses("User", "Model");
 class TwidoController extends AppController {
 
     public $helpers = array('Html', 'Form', 'Session');
-    public $components = array('Session');
+    public $components = array('Session', 'DebugKit.Toolbar');
     private $cb = null;
 
     public function __construct($request, $response) {
