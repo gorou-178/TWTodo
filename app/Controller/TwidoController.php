@@ -103,12 +103,12 @@ class TwidoController extends AppController {
 
             $twUser = $this->User->find("all", array("conditions" => array("User.tw_user_id"=>$me->id_str)));
             if (!$twUser) {
-                $this->User->create();
-                $this->User->tw_user_id = $me->id_str;
-                $this->User->tw_screen_name = $me->screen_name;
-                $this->User->tw_access_token = $reply->oauth_token;
-                $this->User->tw_access_token_secret = $reply->oauth_token_secret;
-                if ($this->User->save()) {
+                $twUser = new User();
+                $twUser->tw_user_id = $me->id_str;
+                $twUser->tw_screen_name = $me->screen_name;
+                $twUser->tw_access_token = $reply->oauth_token;
+                $twUser->tw_access_token_secret = $reply->oauth_token_secret;
+                if ($this->User->save($twUser)) {
                     // セッションハイジャック対策
 //                    session_regenerate_id(true);
                     $twUser = $this->User->findById($this->User->id);

@@ -29,7 +29,7 @@ class TodosController extends AppController {
         $todos = $this->Todo->find('all');
         $this->set(array(
             'todos' => $todos,
-            '_serialize' => array('todos')
+            '_serialize' => arsray('todos')
         ));
     }
 
