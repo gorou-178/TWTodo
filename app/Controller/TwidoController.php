@@ -52,7 +52,6 @@ class TwidoController extends AppController {
 
     public function callback() {
         $this->log("twido callback", "debug");
-        session_start();
 
         if (! isset($_SESSION['oauth_token'])) {
             // get the request token
@@ -85,13 +84,27 @@ class TwidoController extends AppController {
             $_SESSION['oauth_token'] = $reply->oauth_token;
             $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
 
-            $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+            $this->cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
 
             $me = $this->cb->account_verifyCredentials();
             var_dump($me);
 
-            // send to same URL, without oauth GET parameters
-//            header('Location: ' . basename(__FILE__));
+            $twUser = $this->User->findByTwUserId($me->id_str);
+            if (!$twUser) {
+                $this->User->create();
+                $this->User->tw_user_id = $me->id_str;
+                $this->User->tw_screen_name = $me->screen_name;
+                $this->User->tw_access_token = $reply->oauth_token;
+                $this->User->tw_access_token_secret = $reply->oauth_token_secret;
+                if ($this->User->save()) {
+                    // セッションハイジャック対策
+                    session_regenerate_id(true);
+                    $twUser = $this->User->findById($this->User->id);
+                    $this->Session->write("Users.me", $twUser);
+                    return $this->redirect(array("action"=>"index"));
+                }
+            }
+
             die();
         }
 
