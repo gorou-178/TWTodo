@@ -19,11 +19,17 @@ App::uses("User", "Model");
 
 class TwidoController extends AppController {
 
+    // モデルを追加で利用する場合
     public $uses = array('User');
+
+    // ヘルパー
     public $helpers = array('Html', 'Form', 'Session');
+
+    // コンポーネント
     public $components = array('Session', 'DebugKit.Toolbar');
     private $cb = null;
 
+    // コンストラクター
     public function __construct($request, $response) {
         parent::__construct($request, $response);
         Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
@@ -104,14 +110,14 @@ class TwidoController extends AppController {
                 $this->User->tw_access_token_secret = $reply->oauth_token_secret;
                 if ($this->User->save()) {
                     // セッションハイジャック対策
-                    session_regenerate_id(true);
+//                    session_regenerate_id(true);
                     $twUser = $this->User->findById($this->User->id);
                     $this->Session->write("Users.me", $twUser);
                     return $this->redirect(array("action"=>"index"));
                 }
             } else {
                 // セッションハイジャック対策
-                session_regenerate_id(true);
+//                session_regenerate_id(true);
                 $this->Session->write("Users.me", $twUser);
                 return $this->redirect(array("action"=>"index"));
             }
