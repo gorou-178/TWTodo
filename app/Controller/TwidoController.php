@@ -15,7 +15,7 @@ define("CONSUMER_KEY", "nOcbpjvl3jUnB7ipKw8Rg");
 define("CONSUMER_SECRET", "ygjLuY2QPKUcKJsHgdApaliO1Ssn6U3SH55lDtYNs");
 define("SITE_URL", "http://gurimmer.lolipop.jp/app/twido/");
 
-loadModel("User");
+
 
 class TwidoController extends AppController {
 
@@ -34,6 +34,8 @@ class TwidoController extends AppController {
         parent::__construct($request, $response);
         Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
         $this->cb = Codebird::getInstance();
+
+        $this->loadModel("User");
     }
 
     public function index() {
