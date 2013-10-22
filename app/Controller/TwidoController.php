@@ -53,9 +53,11 @@ class TwidoController extends AppController {
     public function callback() {
         $this->log("twido callback", "debug");
 
-        $this->autoRender = false;
-        $this->autoLayout = false;
         if (! isset($_SESSION['oauth_token'])) {
+
+            $this->autoRender = false;
+            $this->autoLayout = false;
+
             // get the request token
             $reply = $this->cb->oauth_requestToken(array(
                 'oauth_callback' => 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']
