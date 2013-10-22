@@ -113,14 +113,14 @@ class TwidoController extends AppController {
 //                    session_regenerate_id(true);
                     $twUser = $this->User->findById($this->User->id);
                     $this->Session->write("Users.me", $twUser);
-                    return $this->redirect(array("action"=>"index"));
                 }
             } else {
                 // セッションハイジャック対策
 //                session_regenerate_id(true);
                 $this->Session->write("Users.me", $twUser);
-                return $this->redirect(array("action"=>"index"));
+
             }
+            return $this->redirect(array("action"=>"index"));
         }
 
         // assign access token on each page load
