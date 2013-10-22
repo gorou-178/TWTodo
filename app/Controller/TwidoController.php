@@ -41,6 +41,7 @@ class TwidoController extends AppController {
             $this->log("twido logging", "debug");
             $this->set("me", $me);
             $this->set("tweets", $tweets);
+
         } else {
             $this->log("twido no loggin", "debug");
         }
@@ -93,7 +94,7 @@ class TwidoController extends AppController {
             $me = $this->cb->account_verifyCredentials();
             var_dump($me);
 
-            $twUser = $this->User->findByTwUserId($me->id_str);
+            $twUser = $this->User->find("all", array("conditions" => array("User.tw_user_id"=>$me->id_str)));
             if (!$twUser) {
                 $this->User->create();
                 $this->User->tw_user_id = $me->id_str;
@@ -107,9 +108,12 @@ class TwidoController extends AppController {
                     $this->Session->write("Users.me", $twUser);
                     return $this->redirect(array("action"=>"index"));
                 }
+            } else {
+                // セッションハイジャック対策
+                session_regenerate_id(true);
+                $this->Session->write("Users.me", $twUser);
+                return $this->redirect(array("action"=>"index"));
             }
-
-            die();
         }
 
         // assign access token on each page load
