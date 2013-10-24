@@ -12,8 +12,6 @@ App::uses("Todo", "Model");
 
 class TodosController extends AppController {
 
-    public $components = array('RequestHandler');
-
     public function beforeFilter() {
         parent::beforeFilter();
 
