@@ -33,8 +33,18 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-    public function home() {
-
-    }
+    public $components = array(
+        'Session',
+        'Auth' => array(
+            'authenticate' => array(
+                'Twim.Twitter' => array(/* options */),
+            ),
+            'loginAction' => array(
+                'plugin' => 'twim',
+                'controller' => 'oauth',
+                'action' => 'login'
+            ),
+        ),
+    );
 
 }

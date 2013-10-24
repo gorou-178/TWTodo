@@ -72,6 +72,20 @@ class DATABASE_CONFIG {
 		'encoding' => 'utf8',
 	);
 
+    /**
+     * TwitterSource using OAuth
+     *
+     * @var array
+     */
+    public $twitter = array(
+        'datasource' => 'Twim.TwimSource',
+        'oauth_consumer_key'    => 'nOcbpjvl3jUnB7ipKw8Rg',
+        'oauth_consumer_secret' => 'ygjLuY2QPKUcKJsHgdApaliO1Ssn6U3SH55lDtYNs',
+//        'oauth_token'           => 'YOUR_ACCESS_TOKEN',        // optional
+//        'oauth_token_secret'    => 'YOUR_ACCESS_TOKEN_SECRET', // optional
+        'oauth_callback'        => '/twim/oauth/callback',
+    );
+
 	public $test = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,

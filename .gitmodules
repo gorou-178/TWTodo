@@ -1,0 +1,6 @@
+[submodule "app/Plugin/DebugKit"]
+	path = app/Plugin/DebugKit
+	url = git@github.com:cakephp/debug_kit.git
+[submodule "app/Plugin/Twim"]
+	path = app/Plugin/Twim
+	url = https://github.com/nojimage/CakePHP-Twim.git

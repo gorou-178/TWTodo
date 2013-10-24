@@ -17,67 +17,24 @@ class TodosController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
 
-        if (!$this->request->is('ajax')) throw new BadRequestException('Ajax以外でのアクセスは許可されていません。');
-        $this->response->header('X-Content-Type-Options', 'nosniff');
+        // ログインしていない場合はHomeに飛ばす
+        $this->log("todos beforefilter", "debug");
     }
 
     public function index() {
-        // 自動ですべて文字列に変換されるのを防ぐ
-        $pdo = $this->Todo->getDatasource()->getConnection();
-        $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-
-        $todos = $this->Todo->find('all');
-        $this->set(array(
-            'todos' => $todos,
-            '_serialize' => arsray('todos')
-        ));
-    }
-
-    // 今回のアプリケーションではToDo個別表示はしないのでviewはいらないが例として表示
-    public function view($id = null) {
-        $todo = $this->Todo->findById($id);
-        $this->set(array(
-            'todo' => $todo,
-            '_serialize' => array('todo')
-        ));
+        $this->log("todos index", "debug");
     }
 
     public function add() {
-        $this->Todo->create();
-        if ($this->Todo->save($this->request->data)) {
-            $message = 'Saved';
-        } else {
-            $message = 'Error';
-        }
-        $this->set(array(
-            'message'    => $message,
-            '_serialize' => array('message')
-        ));
+        $this->log("todos add", "debug");
     }
 
     public function edit($id = null) {
-        $this->Todo->id = $id;
-        if ($this->Todo->save($this->request->data)) {
-            $message = 'Saved';
-        } else {
-            $message = 'Error';
-        }
-        $this->set(array(
-            'message' => $message,
-            '_serialize' => array('message')
-        ));
+        $this->log("todos edit", "debug");
     }
 
     public function delete($id = null) {
-        if ($this->Todo->delete($id)) {
-            $message = 'Deleted';
-        } else {
-            $message = 'Error';
-        }
-        $this->set(array(
-            'message' => $message,
-            '_serialize' => array('message')
-        ));
+        $this->log("todos delete", "debug");
     }
 
 }
