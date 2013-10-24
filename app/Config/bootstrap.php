@@ -108,7 +108,7 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 
-CakePlugin::loadAll();
+//CakePlugin::loadAll();
 
 CakePlugin::load('DebugKit');
 CakePlugin::load('Rest');
