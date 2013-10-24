@@ -111,5 +111,5 @@ CakeLog::config('error', array(
 //CakePlugin::loadAll();
 
 CakePlugin::load('DebugKit');
-CakePlugin::load('Rest');
 CakePlugin::load('Twim', array('bootstrap' => true));
+CakePlugin::load('RESR');
