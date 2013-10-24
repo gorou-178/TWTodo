@@ -108,8 +108,8 @@ CakeLog::config('error', array(
 	'file' => 'error',
 ));
 
-//CakePlugin::loadAll();
+CakePlugin::loadAll();
 
-CakePlugin::load('DebugKit');
-CakePlugin::load('Twim', array('bootstrap' => true));
-CakePlugin::load('RESR');
+//CakePlugin::load('DebugKit');
+//CakePlugin::load('Twim', array('bootstrap' => true));
+//CakePlugin::load('RESR');
