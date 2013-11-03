@@ -98,7 +98,7 @@ class TwitterLoginController extends LoginController {
 
         // $twUser = "てすとてすと";
         // $this->Session->write("User.me", $twUser);
-        return $this->redirect(array("controller"=>"Todos", "action"=>"index"));
+        // return $this->redirect(array("controller"=>"Todos", "action"=>"index"));
     }
 
 
