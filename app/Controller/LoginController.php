@@ -1,4 +1,5 @@
 <?php
+
 App::uses("User", "Model");
 
 /**
@@ -22,6 +23,8 @@ class LoginController extends AppController {
 
     public function logout() {
         $this->log("logout", "debug");
+        $this->Session->delete("User.me");
+        return $this->redirect("/home");
     }
 
     public function callback() {

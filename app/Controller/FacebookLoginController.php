@@ -7,6 +7,8 @@
  * To change this template use File | Settings | File Templates.
  */
 
+App::import('Controller', 'Login');
+
 class FacebookLoginController extends LoginController {
 
     public function login() {

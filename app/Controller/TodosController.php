@@ -17,10 +17,20 @@ class TodosController extends AppController {
 
         // ログインしていない場合はHomeに飛ばす
         $this->log("todos beforefilter", "debug");
+        if (!$this->Session->read("User.me")) {
+            $this->Session->setFlash("ログインを行ってください");
+            return $this->redirect(array("controller"=>"Home", "action"=>"index"));
+        }
     }
 
     public function index() {
         $this->log("todos index", "debug");
+        if ($this->Session->read("User.me")) {
+            $twUser = $this->Session->read("User.me");
+            $tweets = array("tweet"=>"abc", "tweet"=>"あいうえお");
+            $this->set("twUser", $twUser);
+            $this->set("tweets", $tweets);
+        }
     }
 
     public function add() {

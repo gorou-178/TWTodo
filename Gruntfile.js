@@ -10,9 +10,60 @@ module.exports = function(grunt) {
         }
       }
     },
+    rsync: {
+      nodefault:{},
+      dryrun: {
+        src: "./",
+        dest: "/var/www/html",
+        host: "ec2-54-249-212-16.ap-northeast-1.compute.amazonaws.com",
+        recursive: true,
+        compareMode: "checksum",
+        syncDestIgnoreExcl: true,
+        dryRun: true,
+        exclude:[ "app/tmp/", "node_modules/", ".git/", ".DS_Store" ]
+      },
+      deploy: {
+        src: "./",
+        dest: "/var/www/html",
+        host: "ec2-54-249-212-16.ap-northeast-1.compute.amazonaws.com",
+        recursive: true,
+        compareMode: "checksum",
+        syncDestIgnoreExcl: true,
+        exclude:[ "app/tmp/", "node_modules/", ".git/", ".DS_Store" ]
+      }
+    },
+    sshexec: {
+      test: {
+        command: 'date > ./date.txt',
+        options: {
+          host: 'ec2-54-249-212-16.ap-northeast-1.compute.amazonaws.com',
+          username: 'ec2-user',
+          password: '',
+          privateKey: grunt.file.read("/Users/anaisatoshi/AWS/matilda/matilda-pk.pem")
+        }
+      }
+    },
+    sftp: {
+      test: {
+        host: 'ec2-54-249-212-16.ap-northeast-1.compute.amazonaws.com',
+        username: 'ec2-user',
+        password: '',
+        privateKey: grunt.file.read("/Users/anaisatoshi/AWS/matilda/matilda-pk.pem"),
+        path: "/home/ec2-user/TWTodo",
+        srcBasePath: 'TWTodo/',
+        files: {
+          "./app": "./app/*", "./lib": "./lib/*", "./": "./index.php"
+        }
+      }
+    },
     watch: {
-      files: ['css/*.css'],
-      tasks: ['cssmin']
+      main: {
+        files: [
+          '**/*.php',
+          '**/*.ctp'
+        ],
+        tasks: 'deploy'
+      }
     }
   });
 
@@ -24,6 +75,5 @@ module.exports = function(grunt) {
     }
   }
 
-  grunt.registerTask('default', ['cssmin', 'watch']);
-
+  // grunt.registerTask('deploy', ['sftp']);
 };

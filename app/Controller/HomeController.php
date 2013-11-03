@@ -12,6 +12,9 @@ class HomeController extends AppController {
 
     public function index() {
         $this->log("home index", "debug");
+        if ($this->Session->read("User.me")) {
+            return $this->redirect(array("controller"=>"Todos", "action"=>"index"));
+        }
     }
 
 }

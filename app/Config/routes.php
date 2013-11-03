@@ -30,6 +30,13 @@
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 	Router::connect('/', array('controller' => 'Home', 'action' => 'index'));
+    Router::connect('/login/', array('controller' => 'TwitterLogin', 'action' => 'login'));
+    Router::connect('/login/callback', array('controller' => 'TwitterLogin', 'action' => 'callback'));
+    Router::connect('/login/logout', array('controller' => 'TwitterLogin', 'action' => 'logout'));
+
+//    Router::connect('/login/', array('controller' => 'FacebookLogin', 'action' => 'login'));
+//    Router::connect('/login/callback', array('controller' => 'FacebookLogin', 'action' => 'callback'));
+//    Router::connect('/login/logout', array('controller' => 'FacebookLogin', 'action' => 'logout'));
 
 /**
  * ...and connect the rest of 'Pages' controller's urls.
