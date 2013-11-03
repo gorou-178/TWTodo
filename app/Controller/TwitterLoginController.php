@@ -91,8 +91,7 @@ class TwitterLoginController extends LoginController {
             $this->log(get_object_vars($me), "debug");
 
             $this->loadModel("User");
-
-            $twUser = $this->User->find("first", array("conditions" => array("User.tw_user_id"=>$me->id_str)));
+            $twUser = $this->User->find("first", array("conditions" => array("User.tw_user_id"=>$me["id_str"])));
             // $twUser = $this->User->find("all", array("conditions" => array("User.tw_user_id"=>$me->id_str)));
             $this->log(get_object_vars($twUser), "debug");
 
