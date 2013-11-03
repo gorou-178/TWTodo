@@ -29,7 +29,8 @@ class TwitterLoginController extends LoginController {
             $reply = $cb->oauth_requestToken(array(
                 'oauth_callback' => 'http://ec2-54-249-212-16.ap-northeast-1.compute.amazonaws.com/TWTodo/login/callback'
             ));
-            var_dump($reply);
+            // var_dump($reply);
+            $this->log(get_object_vars($reply), "debug");
             // store the token
             $cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
             $_SESSION['oauth_token'] = $reply->oauth_token;
