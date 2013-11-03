@@ -49,7 +49,7 @@ class TwitterLoginController extends LoginController {
             die();
             
         } elseif (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
-            $this->log("twitter callback: find oauth_verify", "debug");
+            $this->log("twitter login: find oauth_verify", "debug");
 
             // verify the token
             $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
@@ -91,7 +91,7 @@ class TwitterLoginController extends LoginController {
             }
             return $this->redirect(array("controller"=>"todos", "action"=>"index"));
         } else {
-            $this->log("twitter callback: no oauth_verify", "debug");
+            $this->log("twitter login: no oauth_verify", "debug");
         }
 
         // Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
@@ -104,29 +104,7 @@ class TwitterLoginController extends LoginController {
         $this->autoRender = false;
         $this->autoLayout = false;
 
-        if (! isset($_SESSION['oauth_token'])) {
-            $this->log("twitter login: not oauth_token", "debug");
-            $this->autoRender = false;
-            $this->autoLayout = false;
-
-            // get the request token
-            $reply = $this->cb->oauth_requestToken(array(
-                'oauth_callback' => 'http://ec2-54-249-212-16.ap-northeast-1.compute.amazonaws.com/TWTodo/login/callback'
-            ));
-            // var_dump($reply);
-            $this->log(get_object_vars($reply), "debug");
-            // store the token
-            $this->cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
-            $_SESSION['oauth_token'] = $reply->oauth_token;
-            $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
-            $_SESSION['oauth_verify'] = true;
-
-            // redirect to auth website
-            $auth_url = $this->cb->oauth_authorize();
-            header('Location: ' . $auth_url);
-            die();
-
-        } elseif (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
+        if (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
             $this->log("twitter callback: find oauth_verify", "debug");
 
             // verify the token
