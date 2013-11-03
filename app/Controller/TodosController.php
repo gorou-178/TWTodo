@@ -42,10 +42,10 @@ class TodosController extends AppController {
         $this->log("todos index", "debug");
         if ($this->Session->read("User.me")) {
             $twUser = $this->Session->read("User.me");
-
+            $this->log(get_object_vars($twUser), "debug");
             $this->cb->setToken($twUser->tw_access_token, $twUser->tw_access_token_secret);
             $tweets = $this->cb->statuses_homeTimeline();
-            $this->log("twido logging", "debug");
+            $this->log("todos logging", "debug");
 
             $this->set("twUser", $twUser);
             $this->set("tweets", $tweets);
