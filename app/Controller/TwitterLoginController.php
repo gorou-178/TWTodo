@@ -48,6 +48,8 @@ class TwitterLoginController extends LoginController {
 
     public function callback() {
         $this->log("twitter callback", "debug");
+        $this->autoRender = false;
+        $this->autoLayout = false;
 
         if (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
 
