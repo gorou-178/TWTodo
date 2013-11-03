@@ -70,7 +70,8 @@ class TwitterLoginController extends LoginController {
             $cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
 
             $me = $cb->account_verifyCredentials();
-            var_dump($me);
+            $this->log(get_object_vars($me), "debug");
+            //var_dump($me);
 
             $twUser = $this->User->find("all", array("conditions" => array("User.tw_user_id"=>$me->id_str)));
             if (!$twUser) {
