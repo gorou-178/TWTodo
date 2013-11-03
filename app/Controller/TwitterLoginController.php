@@ -107,13 +107,14 @@ class TwitterLoginController extends LoginController {
             } else {
                 // セッションハイジャック対策
 //                session_regenerate_id(true);
-                // $twUser = new User();
-                $twUser->tw_user_id = $me->id_str;
-                $twUser->tw_screen_name = $me->screen_name;
-                $twUser->tw_access_token = $reply->oauth_token;
-                $twUser->tw_access_token_secret = $reply->oauth_token_secret;
-                if ($this->User->save($twUser)) {
-                    $this->Session->write("User.me", $twUser);
+                $newTwUser = new User();
+                $newTwUser->id = $twUser->id;
+                $newTwUser->tw_user_id = $me->id_str;
+                $newTwUser->tw_screen_name = $me->screen_name;
+                $newTwUser->tw_access_token = $reply->oauth_token;
+                $newTwUser->tw_access_token_secret = $reply->oauth_token_secret;
+                if ($this->User->save($newTwUser)) {
+                    $this->Session->write("User.me", $newTwUser);
                 }
             }
             return $this->redirect(array("controller"=>"todos", "action"=>"index"));
