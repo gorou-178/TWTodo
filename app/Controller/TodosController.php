@@ -17,6 +17,9 @@ class TodosController extends AppController {
 
     private $cb = null;
 
+    // コンポーネント
+    public $components = array('Session', 'DebugKit.Toolbar');
+
     // コンストラクター
     public function __construct($request, $response) {
         parent::__construct($request, $response);

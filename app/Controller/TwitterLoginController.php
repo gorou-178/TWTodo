@@ -16,6 +16,9 @@ class TwitterLoginController extends LoginController {
 
     private $cb = null;
 
+    // コンポーネント
+    public $components = array('Session', 'DebugKit.Toolbar');
+
     // コンストラクター
     public function __construct($request, $response) {
         parent::__construct($request, $response);
@@ -39,9 +42,13 @@ class TwitterLoginController extends LoginController {
             $this->log(get_object_vars($reply), "debug");
             // store the token
             $this->cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
-            $_SESSION['oauth_token'] = $reply->oauth_token;
-            $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
-            $_SESSION['oauth_verify'] = true;
+            $this->Session->write('oauth_token', $reply->oauth_token);
+            $this->Session->write('oauth_token_secret', $reply->oauth_token_secret);
+            $this->Session->write('oauth_verify', true);
+
+            // $_SESSION['oauth_token'] = $reply->oauth_token;
+            // $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
+            // $_SESSION['oauth_verify'] = true;
 
             // redirect to auth website
             $auth_url = $this->cb->oauth_authorize();
@@ -53,7 +60,8 @@ class TwitterLoginController extends LoginController {
 
             // verify the token
             $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-            unset($_SESSION['oauth_verify']);
+            $this->Session->delete('oauth_verify');
+            // unset($_SESSION['oauth_verify']);
 
             // get the access token
             $reply = $this->cb->oauth_accessToken(array(
@@ -61,8 +69,10 @@ class TwitterLoginController extends LoginController {
             ));
 
             // store the token (which is different from the request token!)
-            $_SESSION['oauth_token'] = $reply->oauth_token;
-            $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
+            $this->Session->write('oauth_token', $reply->oauth_token);
+            $this->Session->write('oauth_token_secret', $reply->oauth_token_secret);
+            // $_SESSION['oauth_token'] = $reply->oauth_token;
+            // $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
 
             $this->cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
 
@@ -96,7 +106,7 @@ class TwitterLoginController extends LoginController {
 
         // Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
         // $cb = Codebird::getInstance();
-        $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+        $this->cb->setToken($this->Session->read('oauth_token'), $this->Session->read('oauth_token_secret'));
     }
 
     public function callback() {
@@ -106,6 +116,7 @@ class TwitterLoginController extends LoginController {
 
         if (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
             $this->log("twitter callback: find oauth_verify", "debug");
+
 
             // verify the token
             $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
@@ -151,7 +162,7 @@ class TwitterLoginController extends LoginController {
             $this->log(get_object_vars($_SESSION), "debug");
         }
 
-        die();
+        $this->cb->setToken($this->Session->read('oauth_token'), $this->Session->read('oauth_token_secret'));
         // $twUser = "てすとてすと";
         // $this->Session->write("User.me", $twUser);
         // return $this->redirect(array("controller"=>"Todos", "action"=>"index"));
