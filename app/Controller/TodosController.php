@@ -15,6 +15,15 @@ App::uses("Todo", "Model");
 
 class TodosController extends AppController {
 
+    private $cb = null;
+
+    // コンストラクター
+    public function __construct($request, $response) {
+        parent::__construct($request, $response);
+        Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
+        $this->cb = Codebird::getInstance();
+    }
+
     public function beforeFilter() {
         parent::beforeFilter();
 
@@ -31,11 +40,8 @@ class TodosController extends AppController {
         if ($this->Session->read("User.me")) {
             $twUser = $this->Session->read("User.me");
 
-            Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
-            $cb = Codebird::getInstance();
-            $cb->setToken($twUser->tw_access_token, $twUser->tw_access_token_secret);
-
-            $tweets = $cb->statuses_homeTimeline();
+            $this->cb->setToken($twUser->tw_access_token, $twUser->tw_access_token_secret);
+            $tweets = $this->cb->statuses_homeTimeline();
             $this->log("twido logging", "debug");
 
             $this->set("twUser", $twUser);
