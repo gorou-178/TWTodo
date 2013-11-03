@@ -8,14 +8,9 @@
  */
 
 require_once ('codebird.php');
-
 use Codebird\Codebird;
 
-define("CONSUMER_KEY", "nOcbpjvl3jUnB7ipKw8Rg");
-define("CONSUMER_SECRET", "ygjLuY2QPKUcKJsHgdApaliO1Ssn6U3SH55lDtYNs");
 define("SITE_URL", "http://gurimmer.lolipop.jp/app/twido/");
-
-
 
 class TwidoController extends AppController {
 

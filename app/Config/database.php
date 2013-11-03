@@ -72,12 +72,12 @@ class DATABASE_CONFIG {
 	public $default = array(
         'datasource' => 'Database/Mysql',
         'persistent' => false,
-        'host' => DB_HOST,
-        'login' => DB_USER,
-        'password' => DB_PASS,
-        'database' => DB_NAME,
+        'host' => 'gurimmer-green-db-1.cnvopn9oakrk.ap-northeast-1.rds.amazonaws.com',
+        'login' => 'webadmin',
+        'password' => 'webadmin',
+        'database' => 'green_db_1',
         'prefix' => '',
-        'port' => DB_PORT,
+        'encoding' => 'utf8',
     );
 
 	public $test = array(

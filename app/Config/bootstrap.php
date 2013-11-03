@@ -109,3 +109,7 @@ CakeLog::config('error', array(
 ));
 
 CakePlugin::load('DebugKit');
+
+
+define("CONSUMER_KEY", "nOcbpjvl3jUnB7ipKw8Rg");
+define("CONSUMER_SECRET", "ygjLuY2QPKUcKJsHgdApaliO1Ssn6U3SH55lDtYNs");
