@@ -11,6 +11,7 @@ require_once ('codebird.php');
 use Codebird\Codebird;
 
 App::import('Controller', 'Login');
+App::uses('User', 'Model');
 
 class TwitterLoginController extends LoginController {
 
@@ -80,6 +81,7 @@ class TwitterLoginController extends LoginController {
             $this->log(get_object_vars($me), "debug");
             //var_dump($me);
 
+            $this->loadModel("User");
             $twUser = $this->User->find("all", array("conditions" => array("User.tw_user_id"=>$me->id_str)));
             if (!$twUser) {
                 $twUser = new User();
@@ -135,7 +137,6 @@ class TwitterLoginController extends LoginController {
 
             $me = $this->cb->account_verifyCredentials();
             $this->log(get_object_vars($me), "debug");
-            //var_dump($me);
 
             $twUser = $this->User->find("all", array("conditions" => array("User.tw_user_id"=>$me->id_str)));
             if (!$twUser) {
