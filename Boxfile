@@ -1,6 +1,6 @@
-# vim: set ft=yaml expandtab tabstop=2 shiftwidth=2 softtabstop=2:
 web1:
   document_root: /app/webroot
+  php_date_timezone: "Asia/Tokyo"
   shared_writable_dirs:
     - app/tmp
     - app/tmp/cache
