@@ -148,6 +148,7 @@ class TwitterLoginController extends LoginController {
             return $this->redirect(array("controller"=>"todos", "action"=>"index"));
         } else {
             $this->log("twitter callback: no oauth_verify", "debug");
+            $this->log(get_object_vars($_SESSION), "debug");
         }
 
         die();
