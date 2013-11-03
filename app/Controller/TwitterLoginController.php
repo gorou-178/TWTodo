@@ -28,6 +28,13 @@ class TwitterLoginController extends LoginController {
 
         // Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
         // $cb = Codebird::getInstance();
+        $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
+    }
+
+    public function callback() {
+        $this->log("twitter callback", "debug");
+        $this->autoRender = false;
+        $this->autoLayout = false;
 
         if (! isset($_SESSION['oauth_token'])) {
             $this->log("twitter login: not oauth_token", "debug");
@@ -50,19 +57,8 @@ class TwitterLoginController extends LoginController {
             $auth_url = $this->cb->oauth_authorize();
             header('Location: ' . $auth_url);
             die();
-        } else {
-            $this->log("twitter login: find oauth_token", "debug");
-        }
-
-        $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-    }
-
-    public function callback() {
-        $this->log("twitter callback", "debug");
-        $this->autoRender = false;
-        $this->autoLayout = false;
-
-        if (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
+            
+        } elseif (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
             $this->log("twitter callback: find oauth_verify", "debug");
 
             // verify the token
