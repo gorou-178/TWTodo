@@ -61,11 +61,11 @@
  */
 
 // Source: http://help.pagodabox.com/customer/portal/articles/174049-cakephp#setting-global-server-variables-in-database-php
-define("DB_HOST", $_SERVER['DB1_HOST']);
-define("DB_NAME", $_SERVER['DB1_NAME']);
-define("DB_USER", $_SERVER['DB1_USER']);
-define("DB_PASS", $_SERVER['DB1_PASS']);
-define("DB_PORT", $_SERVER['DB1_PORT']);
+// define("DB_HOST", $_SERVER['DB1_HOST']);
+// define("DB_NAME", $_SERVER['DB1_NAME']);
+// define("DB_USER", $_SERVER['DB1_USER']);
+// define("DB_PASS", $_SERVER['DB1_PASS']);
+// define("DB_PORT", $_SERVER['DB1_PORT']);
 
 class DATABASE_CONFIG {
 
