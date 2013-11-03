@@ -64,9 +64,9 @@ class DATABASE_CONFIG {
 	public $default = array(
 		'datasource' => 'Database/Mysql',
 		'persistent' => false,
-		'host' => 'gurimmer-green-db-1.cnvopn9oakrk.ap-northeast-1.rds.amazonaws.com',
-		'login' => 'webadmin',
-		'password' => 'webadmin',
+		'host' => 'tunnel.pagodabox.com',
+		'login' => 'lura',
+		'password' => 'pCIK6tGy',
 		'database' => 'green_db_1',
 		'prefix' => '',
 		'encoding' => 'utf8',
