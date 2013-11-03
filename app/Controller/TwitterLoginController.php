@@ -40,6 +40,8 @@ class TwitterLoginController extends LoginController {
             // redirect to auth website
             $auth_url = $cb->oauth_authorize();
             header('Location: ' . $auth_url);
+            die();
+            
         } elseif (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
 
             Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
@@ -140,7 +142,7 @@ class TwitterLoginController extends LoginController {
             return $this->redirect(array("controller"=>"todos", "action"=>"index"));
         }
 
-
+        die();
         // $twUser = "てすとてすと";
         // $this->Session->write("User.me", $twUser);
         // return $this->redirect(array("controller"=>"Todos", "action"=>"index"));
