@@ -102,12 +102,12 @@ class TwitterLoginController extends LoginController {
                     // セッションハイジャック対策
 //                    session_regenerate_id(true);
                     $twUser = $this->User->findById($this->User->id);
-                    $this->Session->write("Users.me", $twUser);
+                    $this->Session->write("User.me", $twUser);
                 }
             } else {
                 // セッションハイジャック対策
 //                session_regenerate_id(true);
-                $this->Session->write("Users.me", $twUser);
+                $this->Session->write("User.me", $twUser);
 
             }
             return $this->redirect(array("controller"=>"todos", "action"=>"index"));
