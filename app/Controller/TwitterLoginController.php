@@ -97,12 +97,16 @@ class TwitterLoginController extends LoginController {
             $this->log(get_object_vars($twUser), "debug");
 
             if (!$twUser) {
-                $twUser = new User();
-                $twUser->tw_user_id = $me->id_str;
-                $twUser->tw_screen_name = $me->screen_name;
-                $twUser->tw_access_token = $reply->oauth_token;
-                $twUser->tw_access_token_secret = $reply->oauth_token_secret;
-                if ($this->User->save($twUser)) {
+                // $twUser = new User();
+                // $twUser->tw_user_id = $me->id_str;
+                // $twUser->tw_screen_name = $me->screen_name;
+                // $twUser->tw_access_token = $reply->oauth_token;
+                // $twUser->tw_access_token_secret = $reply->oauth_token_secret;
+                $data = array("tw_user_id" => $me["id_str"],
+                              "tw_screen_name" => $me["screen_name"],
+                              "tw_access_token" => $reply->oauth_token,
+                              "tw_access_token_secret" => $reply->oauth_token_secret);
+                if ($this->User->save($data)) {
                     // セッションハイジャック対策
 //                    session_regenerate_id(true);
                     $twUser = $this->User->findById($this->User->id);
@@ -111,14 +115,22 @@ class TwitterLoginController extends LoginController {
             } else {
                 // セッションハイジャック対策
 //                session_regenerate_id(true);
-                $newTwUser = new User();
-                $newTwUser->id = $twUser->id;
-                $newTwUser->tw_user_id = $me->id_str;
-                $newTwUser->tw_screen_name = $me->screen_name;
-                $newTwUser->tw_access_token = $reply->oauth_token;
-                $newTwUser->tw_access_token_secret = $reply->oauth_token_secret;
-                if ($this->User->save($newTwUser)) {
-                    $this->Session->write("User.me", $newTwUser);
+                // $newTwUser = new User();
+                // $newTwUser->id = $twUser->id;
+                // $newTwUser->tw_user_id = $me->id_str;
+                // $newTwUser->tw_screen_name = $me->screen_name;
+                // $newTwUser->tw_access_token = $reply->oauth_token;
+                // $newTwUser->tw_access_token_secret = $reply->oauth_token_secret;
+
+                $data = array("id" => $twUser->id,
+                              "tw_user_id" => $me["id_str"],
+                              "tw_screen_name" => $me["screen_name"],
+                              "tw_access_token" => $reply->oauth_token,
+                              "tw_access_token_secret" => $reply->oauth_token_secret);
+
+                if ($this->User->save($data)) {
+                    $twUser = $this->User->findById($this->User->id);
+                    $this->Session->write("User.me", $twUser);
                 }
             }
             return $this->redirect(array("controller"=>"todos", "action"=>"index"));
