@@ -38,11 +38,16 @@ class TodosController extends AppController {
             Codebird::setConsumerKey(CONSUMER_KEY, CONSUMER_SECRET);
             $cb = Codebird::getInstance();
             $cb->setToken($twUser->tw_access_token, $twUser->tw_access_token_secret);
+
+            $me = $cb->account_verifyCredentials();
             $tweets = $cb->statuses_homeTimeline();
             $this->log("todos logging", "debug");
 
             $this->set("twUser", $twUser);
             $this->set("tweets", $tweets);
+        } else {
+            $this->Session->setFlash("ログインを行ってください");
+            return $this->redirect(array("controller"=>"Home", "action"=>"index"));
         }
     }
 

@@ -68,13 +68,14 @@ class TwitterLoginController extends LoginController {
         $this->autoRender = false;
         $this->autoLayout = false;
 
-        if (isset($_GET['oauth_verifier']) && isset($_SESSION['oauth_verify'])) {
+        if (isset($_GET['oauth_verifier']) && isset($this->Session->read('oauth_verify'))) {
             $this->log("twitter callback: find oauth_verify", "debug");
 
 
             // verify the token
-            $this->cb->setToken($_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
-            unset($_SESSION['oauth_verify']);
+            $this->cb->setToken($this->Session->read('oauth_token'), $this->Session->read('oauth_token_secret'));
+            //unset($_SESSION['oauth_verify']);
+            $this->Session->delete('oauth_verify');
 
             // get the access token
             $reply = $this->cb->oauth_accessToken(array(
@@ -82,8 +83,8 @@ class TwitterLoginController extends LoginController {
             ));
 
             // store the token (which is different from the request token!)
-            $_SESSION['oauth_token'] = $reply->oauth_token;
-            $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
+            // $_SESSION['oauth_token'] = $reply->oauth_token;
+            // $_SESSION['oauth_token_secret'] = $reply->oauth_token_secret;
 
             $this->cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
 
