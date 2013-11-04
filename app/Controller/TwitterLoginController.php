@@ -88,7 +88,7 @@ class TwitterLoginController extends LoginController {
 
             $this->cb->setToken($reply->oauth_token, $reply->oauth_token_secret);
 
-            $me = $this->cb->account_verifyCredentials();
+            $me = (array)$this->cb->account_verifyCredentials();
             $this->log(get_object_vars($me), "debug");
 
             $this->loadModel("User");
