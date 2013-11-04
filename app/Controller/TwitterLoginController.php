@@ -30,7 +30,7 @@ class TwitterLoginController extends LoginController {
     public function login() {
         $this->log("twitter login", "debug");
 
-        if (! isset($_SESSION['oauth_token'])) {
+        if (empty($this->Session->read('oauth_token'))) {
             $this->log("twitter login: not oauth_token", "debug");
             $this->autoRender = false;
             $this->autoLayout = false;
@@ -68,7 +68,7 @@ class TwitterLoginController extends LoginController {
         $this->autoRender = false;
         $this->autoLayout = false;
 
-        if (isset($_GET['oauth_verifier']) && isset($this->Session->read('oauth_verify'))) {
+        if (isset($_GET['oauth_verifier']) && !empty($this->Session->read('oauth_verify'))) {
             $this->log("twitter callback: find oauth_verify", "debug");
 
 
